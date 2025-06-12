@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser"
 import authRoutes from "./routes/auth.routes.js";
 import problemRoutes from "./routes/problems.routes.js";
 import executionRoutes from "./routes/executionRoutes.routes.js";
+import submissionRoutes from "./routes/submission.routes.js";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.get("/",(req,res)=>{
 app.use("/api/v1/auth",authRoutes)
 app.use("/api/v1/problems",problemRoutes)
 app.use("/api/v1/execute-code",executionRoutes)
+app.use("/api/v1/submissions",submissionRoutes)
 
 app.listen(port,()=>{
     console.log(`App is listening port ${port}`);
