@@ -11,7 +11,12 @@ import {
   Mail,
 } from "lucide-react";
 import { z } from "zod";
-import AuthImagePattern from '../components/AuthImagePattern';
+import AuthImagePattern from '../components/AuthImagePattern.jsx';
+import { useAuthStore } from '../store/useAuthStore.js';
+
+
+
+
 const SignUpSchema = z.object({
   email: z.string().email("Enter a valid email"),
   password: z.string().min(6, "Password must be at least 6 characters"),
@@ -20,6 +25,9 @@ const SignUpSchema = z.object({
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const {signup , isSigninUp} = useAuthStore();
+
 
   const {
     register,
@@ -30,7 +38,13 @@ const SignUpPage = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
+   
+    try {
+      await signup(data); // your auth logic here
+      console.log("SignUp Data:", data);
+    } catch (error) {
+      console.error("SignUp failed:", error);
+    } 
   };
 
   return (
@@ -133,7 +147,7 @@ const SignUpPage = () => {
             </div>
 
             {/* Submit Button */}
-            {/* <button
+            <button
               type="submit"
               className="btn btn-primary w-full"
               disabled={isSigninUp}
@@ -146,7 +160,7 @@ const SignUpPage = () => {
               ) : (
                 "Sign in"
               )}
-            </button> */}
+            </button>
           </form>
 
           {/* Footer */}
