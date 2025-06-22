@@ -92,11 +92,11 @@ export const getAllProblems = async (req, res) => {
     const problems = await db.problem.findMany({
       include: {
         solvedBy: {
-          include: {
-            userId:req.user.id,
+          where: {
+            userId: req.user.id,
           },
         },
-      }
+      },
     });
 
     if (!problems) {
